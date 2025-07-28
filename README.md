@@ -1,8 +1,8 @@
 ## How to run apps
 
 README: Multi-System Login with Laravel 12 + Sanctum (website-app & software-app)
-	--- u- test@example.com
-	--- p- 123456789
+	- u- test@example.com
+	- p- 123456789
 
 1.  Requirements
 
