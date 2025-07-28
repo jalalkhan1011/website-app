@@ -37,9 +37,9 @@ p- 123456789
 	- APP_URL=http://website-app.test # website-app এর জন্য
 	- APP_URL=http://software-app.test # software-app এর জন্য
 
-    - DB_DATABASE=multi_system_db
-	- DB_USERNAME=root
-	- DB_PASSWORD=
+    -- DB_DATABASE=multi_system_db
+	-- DB_USERNAME=root
+	-- DB_PASSWORD=
 
 -   Step 4: Sanctum Install (দুই প্রজেক্টে)
     - composer require laravel/sanctum
@@ -58,7 +58,7 @@ p- 123456789
 -   Step 6: Create config/cors.php (Manually)
     - config/cors.php তৈরি করুন:
 
-	<?php
+	## <?php
 
 	return [
 		'paths' => ['api/*', 'sanctum/csrf-cookie', '*'],
