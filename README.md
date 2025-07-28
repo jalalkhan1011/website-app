@@ -32,10 +32,10 @@ p- 123456789
     cp .env.example .env
 
 -   Step 3: Configure .env
-    উভয় প্রজেক্টের .env ফাইলে একই DB ব্যবহার করুন
+    - উভয় প্রজেক্টের .env ফাইলে একই DB ব্যবহার করুন
 
-APP_URL=http://website-app.test # website-app এর জন্য
-APP_URL=http://software-app.test # software-app এর জন্য
+	- APP_URL=http://website-app.test # website-app এর জন্য
+	- APP_URL=http://software-app.test # software-app এর জন্য
 
 DB_DATABASE=multi_system_db
 DB_USERNAME=root
