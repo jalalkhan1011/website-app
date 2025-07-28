@@ -1,8 +1,8 @@
 ## How to run apps
 
 README: Multi-System Login with Laravel 12 + Sanctum (website-app & software-app)
-u- test@example.com
-p- 123456789
+	--- u- test@example.com
+	--- p- 123456789
 
 1.  Requirements
 
@@ -58,7 +58,7 @@ p- 123456789
 -   Step 6: Create config/cors.php (Manually)
     - config/cors.php তৈরি করুন:
 
-	## <?php
+	 <?php
 
 	return [
 		'paths' => ['api/*', 'sanctum/csrf-cookie', '*'],
