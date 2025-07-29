@@ -49,9 +49,9 @@
     -   Step 6: Create config/cors.php (Manually)
         - config/cors.php তৈরি করুন:
 
-        <?php
+       - <?php
 
-        return [
+       - return [
             'paths' => ['api/*', 'sanctum/csrf-cookie', '*'],
 
             'allowed_methods' => ['*'],
@@ -67,7 +67,7 @@
 
     - Step 7: Add Middleware in bootstrap/app.php
 
-        ->withMiddleware(function (Middleware $middleware): void {
+        - ->withMiddleware(function (Middleware $middleware): void {
             $middleware->web([
                 \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
                 \Illuminate\Http\Middleware\HandleCors::class,
