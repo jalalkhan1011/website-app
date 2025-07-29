@@ -1,116 +1,110 @@
-## How to run apps
-
-README: Multi-System Login with Laravel 12 + Sanctum (website-app & software-app)
-	- u- test@example.com
-	- p- 123456789
-
+## Project Overview
+- README: Multi-System Login with Laravel 12 + Sanctum (website-app & software-app)
 1.  Requirements
-
- -   PHP 8.2+
-
- -   Composer
-
- -   Laravel 12
-
- -   MySQL (same DB for both apps)
-
- -   Localhost with custom domains (website-app.test, software-app.test)
+    - PHP 8.2+
+    - Composer
+    - Laravel 12
+    - MySQL (same DB for both apps)
+    - Localhost with custom domains (website-app.test, software-app.test)
 
 2. Installation Steps (For Both Projects)
 
--   Step 1: Clone Both Repositories
-    - git clone https://github.com/jalalkhan1011/website-app.git
-    - git clone https://github.com/jalalkhan1011/software-app.git
+    -   Step 1: Clone Both Repositories
+        - git clone https://github.com/jalalkhan1011/website-app.git
+        - git clone https://github.com/jalalkhan1011/software-app.git
 
--   Step 2: Install Dependencies
-    - cd website-app
-    - composer install
-    - cp .env.example .env
+    -   Step 2: Install Dependencies
+        - cd website-app
+        - composer install
+        - cp .env.example .env
 
-    - cd ../software-app
-    - composer install
-    - cp .env.example .env
+        - cd ../software-app
+        - composer install
+        - cp .env.example .env
 
--   Step 3: Configure .env
-    - উভয় প্রজেক্টের .env ফাইলে একই DB ব্যবহার করুন
+    - Step 3: Configure .env
+        - উভয় প্রজেক্টের .env ফাইলে একই DB ব্যবহার করুন
 
-	- APP_URL=http://website-app.test # website-app এর জন্য
-	- APP_URL=http://software-app.test # software-app এর জন্য
+        - APP_URL=http://website-app.test # website-app এর জন্য
+        - APP_URL=http://software-app.test # software-app এর জন্য
 
-    -- DB_DATABASE=multi_system_db
-	-- DB_USERNAME=root
-	-- DB_PASSWORD=
+        - DB_DATABASE=multi_system_db
+        - DB_USERNAME=root
+        - DB_PASSWORD=
 
--   Step 4: Sanctum Install (দুই প্রজেক্টে)
-    - composer require laravel/sanctum
-    - php artisan migrate
+    -   Step 4: Sanctum Install (দুই প্রজেক্টে)
+        - composer require laravel/sanctum
+        - php artisan migrate
 
--   Step 5: Update User Model
-    - app/Models/User.php এ:
+    -   Step 5: Update User Model
+        - app/Models/User.php এ:
 
-    - use Laravel\Sanctum\HasApiTokens;
+        - use Laravel\Sanctum\HasApiTokens;
 
-    class User extends Authenticatable
-    {
-    use HasApiTokens, Notifiable;
-    }
+        class User extends Authenticatable
+        {
+        use HasApiTokens, Notifiable;
+        }
 
--   Step 6: Create config/cors.php (Manually)
-    - config/cors.php তৈরি করুন:
+    -   Step 6: Create config/cors.php (Manually)
+        - config/cors.php তৈরি করুন:
 
-	 <?php
+        <?php
 
-	return [
-		'paths' => ['api/*', 'sanctum/csrf-cookie', '*'],
+        return [
+            'paths' => ['api/*', 'sanctum/csrf-cookie', '*'],
 
-		'allowed_methods' => ['*'],
+            'allowed_methods' => ['*'],
 
-		'allowed_origins' => [
-			'http://website-app.test',
-			'http://software-app.test',
-		],
+            'allowed_origins' => [
+                'http://website-app.test',
+                'http://software-app.test',
+            ],
 
-		'allowed_headers' => ['*'],
-		'supports_credentials' => true,
-	];
+            'allowed_headers' => ['*'],
+            'supports_credentials' => true,
+        ];
 
-- Step 7: Add Middleware in bootstrap/app.php
+    - Step 7: Add Middleware in bootstrap/app.php
 
-	->withMiddleware(function (Middleware $middleware): void {
-		$middleware->web([
-			\Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-			\Illuminate\Http\Middleware\HandleCors::class,
-		]);
-	})
+        ->withMiddleware(function (Middleware $middleware): void {
+            $middleware->web([
+                \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+                \Illuminate\Http\Middleware\HandleCors::class,
+            ]);
+        })
 
-- Step 9: Clear Cache
-  - php artisan config:clear
-  - php artisan cache:clear
+    - Step 9: Clear Cache
+        - php artisan config:clear
+        - php artisan cache:clear
 
 3. Localhost Domain Setup
- - C:\Windows\System32\drivers\etc\hosts ফাইলে যোগ করুন:
- - 127.0.0.1 website-app.test
- - 127.0.0.1 software-app.test
+    - C:\Windows\System32\drivers\etc\hosts ফাইলে যোগ করুন:
+    - 127.0.0.1 website-app.test
+    - 127.0.0.1 software-app.test
 
 4. Run Both Projects
- - cd website-app
- - php artisan serve --host=website-app.test --port=8000
-
- - cd ../software-app
- - php artisan serve --host=software-app.test --port=8001
+    - cd website-app
+    - php artisan serve --host=website-app.test --port=8000
+    - cd ../software-app
+    - php artisan serve --host=software-app.test --port=8001
 
 5. Testing SSO Flow
- - software-app এ ইউজার auto login হবে এবং /dashboard এ যাবে।
- - logout করলে দুই সিস্টেম থেকেই লগআউট হবে।
+    - software-app এ ইউজার auto login হবে এবং /dashboard এ যাবে।
+    - logout করলে দুই সিস্টেম থেকেই লগআউট হবে।
 
 6. Features Implemented
- - Single Sign-On (SSO) via Laravel Sanctum
- - Auto Login to software-app after website-app login
- - Shared Database for Users
- - Logout Sync across both apps
- - CORS configured for cross-domain requests
+    - Single Sign-On (SSO) via Laravel Sanctum
+    - Auto Login to software-app after website-app login
+    - Shared Database for Users
+    - Logout Sync across both apps
+    - CORS configured for cross-domain requests
 
-/////////////////////////////////////////////////////////////////////
+7. Login credential
+    - User-> test@example.com
+    - password-> 123456789
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
